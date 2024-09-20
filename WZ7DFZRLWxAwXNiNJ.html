@@ -1,0 +1,208 @@
+<html><head><base href="https://discord-clone.example.com/"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Discord Clone</title><style>
+:root {
+  --bg-primary: #36393f;
+  --bg-secondary: #2f3136;
+  --bg-tertiary: #202225;
+  --text-primary: #dcddde;
+  --text-muted: #72767d;
+  --accent: #7289da;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+#servers-list {
+  width: 72px;
+  background-color: var(--bg-tertiary);
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.server-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-radius 0.15s ease-out;
+}
+
+.server-icon:hover {
+  border-radius: 16px;
+  background-color: var(--accent);
+}
+
+#channels-list {
+  width: 240px;
+  background-color: var(--bg-secondary);
+  padding: 12px;
+}
+
+.channel {
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 2px;
+}
+
+.channel:hover {
+  background-color: rgba(79,84,92,0.16);
+}
+
+#chat-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#messages {
+  flex-grow: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: 16px;
+}
+
+#message-input {
+  background-color: var(--bg-secondary);
+  padding: 16px;
+}
+
+#message-input input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+#users-list {
+  width: 240px;
+  background-color: var(--bg-secondary);
+  padding: 12px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user:hover {
+  background-color: rgba(79,84,92,0.16);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--bg-tertiary);
+  margin-right: 8px;
+}
+
+.user-name {
+  font-weight: 500;
+}
+</style></head><body>
+  <div id="servers-list">
+    <div class="server-icon">D</div>
+    <div class="server-icon">+</div>
+  </div>
+  
+  <div id="channels-list">
+    <h3>Canais de Texto</h3>
+    <div class="channel"># geral</div>
+    <div class="channel"># bate-papo</div>
+    <div class="channel"># ajuda</div>
+  </div>
+  
+  <div id="chat-area">
+    <div id="messages">
+      <!-- As mensagens serão adicionadas aqui dinamicamente -->
+    </div>
+    <div id="message-input">
+      <input type="text" placeholder="Envie uma mensagem para #geral">
+    </div>
+  </div>
+  
+  <div id="users-list">
+    <h3>Usuários Online - 3</h3>
+    <div class="user">
+      <div class="user-avatar"></div>
+      <span class="user-name">Usuário1</span>
+    </div>
+    <div class="user">
+      <div class="user-avatar"></div>
+      <span class="user-name">Usuário2</span>
+    </div>
+    <div class="user">
+      <div class="user-avatar"></div>
+      <span class="user-name">Usuário3</span>
+    </div>
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const messageInput = document.querySelector('#message-input input');
+  const messagesContainer = document.getElementById('messages');
+
+  messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && messageInput.value.trim() !== '') {
+      const message = document.createElement('div');
+      message.className = 'message';
+      message.innerHTML = `
+        <strong>Você:</strong> ${messageInput.value}
+      `;
+      messagesContainer.appendChild(message);
+      messageInput.value = '';
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  });
+
+  // Simular recebimento de mensagens
+  const botMessages = [
+    'Olá! Bem-vindo ao nosso servidor!',
+    'Como posso ajudar você hoje?',
+    'Não se esqueça de ler as regras do servidor.',
+    'Divirta-se conversando com outros membros!'
+  ];
+
+  function simulateBotMessage() {
+    const randomMessage = botMessages[Math.floor(Math.random() * botMessages.length)];
+    const message = document.createElement('div');
+    message.className = 'message';
+    message.innerHTML = `
+      <strong>Bot:</strong> ${randomMessage}
+    `;
+    messagesContainer.appendChild(message);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  // Simular uma mensagem do bot a cada 10 segundos
+  setInterval(simulateBotMessage, 10000);
+});
+</script>
+</body></html>
